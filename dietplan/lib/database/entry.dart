@@ -27,7 +27,7 @@ class Entry {
 
   Entry.fromMap(Map<String, dynamic> map) {
     id = map['id'];
-    icon = map['name'];
+    icon = map['icon'];
     calc = map['calc'];
     type = map['type'];
     time = map['time'];

@@ -52,7 +52,8 @@ class DBHelper {
     var dbClient = await db;
     List<Map> maps = await dbClient.query('Entry',
         columns: ['id', 'icon', 'calc', 'type', 'time', 'dmy'],
-        where: 'dmy = $dmy');
+        where: 'dmy = ?',
+        whereArgs: [dmy]);
     List<Entry> entry = [];
     if (maps.length > 0) {
       for (int i = 0; i < maps.length; i++) {

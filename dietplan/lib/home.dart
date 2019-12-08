@@ -56,9 +56,9 @@ class _HomeState extends State<Home> {
       "1000"
     ];
 
-    void _modalBottomSheetMenu() {
+    void _modalBottomSheetMenu(onSaved) {
       showModalBottomSheet(
-          context: context, builder: (builder) => BottomSheet());
+          context: context, builder: (builder) => BottomSheet(onSaved));
     }
 
     return PageView.builder(
@@ -81,21 +81,34 @@ class _HomeState extends State<Home> {
 
               List<Entry> entries = snapshot.data;
 
+              List<Entry> entriesP = [];
+              List<Entry> entriesN = [];
+
               if (entries != null) {
-                print(entries.length);
-                print(formatter.format(ind));
+                for (Entry entry in entries) {
+                  if (entry.type == 0)
+                    entriesP.add(entry);
+                  else
+                    entriesN.add(entry);
+
+                  tCal = tCal + (entry.type == 0 ? entry.calc : -entry.calc);
+                }
               } else {
                 print('null');
               }
+
               return DefaultTabController(
                 length: 2,
                 child: Scaffold(
                   appBar: AppBar(
+                    title: Text('Diet Planner'),
                     actions: index == 0
                         ? <Widget>[
                             IconButton(
                               onPressed: () {
-                                _modalBottomSheetMenu();
+                                _modalBottomSheetMenu(() {
+                                  setState(() {});
+                                });
                               },
                               icon: Icon(
                                 Icons.add,
@@ -200,6 +213,7 @@ class _HomeState extends State<Home> {
                   body: TabBarView(
                     children: [
                       ListView.builder(
+                          itemCount: entriesP.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Container(
@@ -233,7 +247,7 @@ class _HomeState extends State<Home> {
                                             child: Container(),
                                           ),
                                           Image.asset(
-                                            options[0],
+                                            options[entriesP[index].icon],
                                             height: 50.0,
                                           ),
                                           Expanded(
@@ -241,7 +255,7 @@ class _HomeState extends State<Home> {
                                             child: Container(),
                                           ),
                                           Text(
-                                            '200 kcal',
+                                            '${entriesP[index].calc} kcal',
                                             style: TextStyle(
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.bold),
@@ -258,7 +272,7 @@ class _HomeState extends State<Home> {
                                             child: Container(),
                                           ),
                                           Text(
-                                            'Tea, 6.30AM',
+                                            '${optionTitles[entriesP[index].icon]}, ${entriesP[index].time}',
                                             style: TextStyle(fontSize: 16.0),
                                           ),
                                           Expanded(
@@ -273,6 +287,7 @@ class _HomeState extends State<Home> {
                             );
                           }),
                       ListView.builder(
+                          itemCount: entriesN.length,
                           scrollDirection: Axis.horizontal,
                           itemBuilder: (context, index) {
                             return Container(
@@ -306,7 +321,7 @@ class _HomeState extends State<Home> {
                                             child: Container(),
                                           ),
                                           Image.asset(
-                                            options[3],
+                                            options[entriesN[index].icon],
                                             height: 50.0,
                                           ),
                                           Expanded(
@@ -314,7 +329,7 @@ class _HomeState extends State<Home> {
                                             child: Container(),
                                           ),
                                           Text(
-                                            '200 kcal',
+                                            '${entriesN[index].calc} kcal',
                                             style: TextStyle(
                                                 fontSize: 20.0,
                                                 fontWeight: FontWeight.bold),
@@ -331,7 +346,7 @@ class _HomeState extends State<Home> {
                                             child: Container(),
                                           ),
                                           Text(
-                                            'Activity, 4.25 PM',
+                                            '${optionTitles[entriesN[index].icon]}, ${entriesN[index].time}',
                                             style: TextStyle(fontSize: 16.0),
                                           ),
                                           Expanded(
@@ -356,6 +371,10 @@ class _HomeState extends State<Home> {
 }
 
 class BottomSheet extends StatefulWidget {
+  final Function onSaved;
+
+  BottomSheet(this.onSaved);
+
   @override
   _BottomSheetState createState() => _BottomSheetState();
 }
@@ -494,9 +513,9 @@ class _BottomSheetState extends State<BottomSheet> {
                                     formatterTime.format(dTime),
                                     formatter.format(dTime));
 
-                                print(entry);
-
                                 dbHelper.add(entry);
+
+                                widget.onSaved();
 
                                 Navigator.of(context).pop();
                               },
