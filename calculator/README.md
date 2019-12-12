@@ -1,6 +1,6 @@
 # Calc.
 
-A beautifull calculator app built with Flutter for Android and IOS.
+A beautiful calculator app built with Flutter for Android and IOS.
 
 
 
