@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "456729738687",
+    "firebase_url": "https://myflutterpro.firebaseio.com",
+    "project_id": "myflutterpro",
+    "storage_bucket": "myflutterpro.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456729738687:android:89b860d31250bb12d4f50a",
+        "android_client_info": {
+          "package_name": "com.vamsi.followup"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "456729738687-h35ojol43ug5a0oc3uq7tfftlg2a9vrf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyClcBTg4m6yr2S_Zi0pMD5udrN0fd9ezpk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "456729738687-h35ojol43ug5a0oc3uq7tfftlg2a9vrf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
